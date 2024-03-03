@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Country;
 use App\Models\Economy;
+use App\Models\Event;
 use Illuminate\Http\Request;
 
 class EconomyController extends Controller
@@ -23,7 +25,9 @@ class EconomyController extends Controller
      */
     public function create()
     {
-        //
+        return view('economy_create',[
+            'countries' => Country::all()
+        ]);
     }
 
     /**
@@ -31,7 +35,15 @@ class EconomyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated=$request->validate([
+            'country_id' => 'integer',
+            'year' => 'required|date',
+            'GDP' => 'required|integer',
+            'GDP_person' => 'required|integer'
+        ]);
+        $economy=new Economy($validated);
+        $economy->save();
+        return redirect('/economy');
     }
 
     /**
@@ -47,7 +59,10 @@ class EconomyController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return view('economy_edit',[
+            'economy' => Economy::all()->where('id',$id)->first(),
+            'countries' => Country::all()
+        ]);
     }
 
     /**
@@ -55,7 +70,19 @@ class EconomyController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validated=$request->validate([
+            'country_id' => 'integer',
+            'year' => 'required|date',
+            'GDP' => 'required|integer',
+            'GDP_person' => 'required|integer'
+        ]);
+        $economy = Economy::all()->where('id',$id)->first();
+        $economy->country_id = $validated['country_id'];
+        $economy->year = $validated['year'];
+        $economy->GDP = $validated['GDP'];
+        $economy->GDP_person = $validated['GDP_person'];
+        $economy->save();
+        return redirect('/economy');
     }
 
     /**
@@ -63,6 +90,7 @@ class EconomyController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Economy::destroy($id);
+        return redirect('/economy');
     }
 }

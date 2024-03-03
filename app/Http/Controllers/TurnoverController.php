@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Country;
+use App\Models\Event;
 use App\Models\Turnover;
 use Illuminate\Http\Request;
 
@@ -22,7 +24,9 @@ class TurnoverController extends Controller
      */
     public function create()
     {
-        //
+        return view('turnover_create',[
+            'countries' => Country::all()
+        ]);
     }
 
     /**
@@ -30,7 +34,16 @@ class TurnoverController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated=$request->validate([
+            'country1_id' => 'integer',
+            'country2_id' => 'integer',
+            'year' => 'required|integer',
+            'export_from1_to2' => 'required|integer',
+            'export_from2_to1' => 'required|integer'
+        ]);
+        $turnover=new Turnover($validated);
+        $turnover->save();
+        return redirect('/turnover');
     }
 
     /**
@@ -46,7 +59,10 @@ class TurnoverController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return view('turnover_edit',[
+            'turnover' => Turnover::all()->where('id',$id)->first(),
+            'countries' => Country::all()
+        ]);
     }
 
     /**
@@ -54,7 +70,21 @@ class TurnoverController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validated=$request->validate([
+            'country1_id' => 'integer',
+            'country2_id' => 'integer',
+            'year' => 'required|integer',
+            'export_from1_to2' => 'required|integer',
+            'export_from2_to1' => 'required|integer'
+        ]);
+        $turnover = Turnover::all()->where('id',$id)->first();
+        $turnover->country1_id = $validated['country1_id'];
+        $turnover->country2_id = $validated['country2_id'];
+        $turnover->year = $validated['year'];
+        $turnover->export_from1_to2 = $validated['export_from1_to2'];
+        $turnover->export_from2_to1 = $validated['export_from2_to1'];
+        $turnover->save();
+        return redirect('/turnover');
     }
 
     /**
@@ -62,6 +92,7 @@ class TurnoverController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Turnover::destroy($id);
+        return redirect('/turnover');
     }
 }

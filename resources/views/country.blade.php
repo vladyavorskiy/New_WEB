@@ -5,6 +5,12 @@
     <title> 609-11 </title>
 </head>
 <body>
+<div>
+    <button onclick="location.href='{{url('country')}}'">Страны</button>
+    <button onclick="location.href='{{url('event')}}'">События</button>
+    <button onclick="location.href='{{url('turnover')}}'">Товарооборот</button>
+    <button onclick="location.href='{{url('economy')}}'">Экономика</button>
+</div>
     <h2>{{$country ? "Список событий в стране: ".$country->name: 'Неверный ID страны'}}</h2>
     @if($country)
         <table border="1">

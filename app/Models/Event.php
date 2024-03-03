@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Event extends Model
 {
+    protected $guarded = [];
     use HasFactory;
     public function country():BelongsTo
     {

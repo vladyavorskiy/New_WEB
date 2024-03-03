@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Economy extends Model
 {
     use HasFactory;
+    protected $guarded = [];
+
     public function country():BelongsTo
     {
         return $this->belongsTo(Country::class);

@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Turnover extends Model
 {
     use HasFactory;
+    protected $guarded = [];
+
     public function country1():BelongsTo
     {
         return $this->belongsTo(Country::class, 'country1_id');
