@@ -5,16 +5,20 @@ namespace App\Http\Controllers;
 use App\Models\Country;
 use App\Models\Event;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class CountryController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $perpage = $request->perpage ?? 2;
         return view('countries',[
-            'countries' => Country::all()
+            //'countries' => Country::all()
+            //'countries' => Country::paginate(2)
+            'countries' => Country::paginate($perpage)->withQueryString()
         ]);
     }
 
@@ -90,6 +94,10 @@ class CountryController extends Controller
      */
     public function destroy(string $id)
     {
+        if (! Gate::allows('destroy-country', Country::all()->where('id',$id)->first())){
+            return redirect('/error')->with('message',
+                'У вас нет разрешения на удаление страны номер ' . $id);
+        }
         Country::destroy($id);
         return redirect('/country');
     }

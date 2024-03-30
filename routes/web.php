@@ -5,6 +5,7 @@ use App\Http\Controllers\CountryController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\TurnoverController;
 use App\Http\Controllers\EconomyController;
+use App\Http\Controllers\LoginController;
 
 
 /*
@@ -32,26 +33,38 @@ Route::get('/event',[EventController::class, 'index']);
 Route::get('/turnover',[TurnoverController::class, 'index']);
 Route::get('/economy',[EconomyController::class, 'index']);
 
-Route::get('/event/create', [EventController::class, 'create']);
+Route::get('/event/create', [EventController::class, 'create'])->middleware('auth');
 Route::post('/event', [EventController::class, 'store']);
-Route::get('event/edit/{id}',[EventController::class, 'edit']);
-Route::post('/event/update/{id}', [EventController::class, 'update']);
-Route::get('/event/destroy/{id}', [EventController::class, 'destroy']);
+Route::get('event/edit/{id}',[EventController::class, 'edit'])->middleware('auth');
+Route::post('/event/update/{id}', [EventController::class, 'update'])->middleware('auth');
+Route::get('/event/destroy/{id}', [EventController::class, 'destroy'])->middleware('auth');
 
-Route::get('/country_create', [CountryController::class, 'create']);
+Route::get('/country_create', [CountryController::class, 'create'])->middleware('auth');
 Route::post('/country', [CountryController::class, 'store']);
-Route::get('country/edit/{id}',[CountryController::class, 'edit']);
-Route::post('/country/update/{id}', [CountryController::class, 'update']);
-Route::get('/country/destroy/{id}', [CountryController::class, 'destroy']);
+Route::get('country/edit/{id}',[CountryController::class, 'edit'])->middleware('auth');
+Route::post('/country/update/{id}', [CountryController::class, 'update'])->middleware('auth');
+Route::get('/country/destroy/{id}', [CountryController::class, 'destroy'])->middleware('auth');
 
-Route::get('/economy/create', [EconomyController::class, 'create']);
+Route::get('/economy/create', [EconomyController::class, 'create'])->middleware('auth');
 Route::post('/economy', [EconomyController::class, 'store']);
-Route::get('economy/edit/{id}',[EconomyController::class, 'edit']);
-Route::post('/economy/update/{id}', [EconomyController::class, 'update']);
-Route::get('/economy/destroy/{id}', [EconomyController::class, 'destroy']);
+Route::get('economy/edit/{id}',[EconomyController::class, 'edit'])->middleware('auth');
+Route::post('/economy/update/{id}', [EconomyController::class, 'update'])->middleware('auth');
+Route::get('/economy/destroy/{id}', [EconomyController::class, 'destroy'])->middleware('auth');
 
-Route::get('/turnover/create', [TurnoverController::class, 'create']);
+Route::get('/turnover/create', [TurnoverController::class, 'create'])->middleware('auth');
 Route::post('/turnover', [TurnoverController::class, 'store']);
-Route::get('turnover/edit/{id}',[TurnoverController::class, 'edit']);
-Route::post('/turnover/update/{id}', [TurnoverController::class, 'update']);
-Route::get('/turnover/destroy/{id}', [TurnoverController::class, 'destroy']);
+Route::get('turnover/edit/{id}',[TurnoverController::class, 'edit'])->middleware('auth');
+Route::post('/turnover/update/{id}', [TurnoverController::class, 'update'])->middleware('auth');
+Route::get('/turnover/destroy/{id}', [TurnoverController::class, 'destroy'])->middleware('auth');
+
+
+Route::get('/login', [LoginController::class, 'login'])->name('login');
+Route::get('/logout',[LoginController::class, 'logout']);
+Route::post('/auth',[LoginController::class, 'authenticate']);
+
+Route::get('/error',function (){
+    return view('error', ['message' => session('message')]);
+});
+
+//qwerty2024WEB
+//$2y$10$BbbYoCqozdNDurejmC0YtefsEa9PNYqonNG0YuVCBAsjvUsTT99YC

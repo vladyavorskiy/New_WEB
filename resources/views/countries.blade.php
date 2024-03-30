@@ -33,6 +33,7 @@
         </tr>
     @endforeach
 </table>
+{{ $countries->links() }}
 <br>
 <button onclick="location.href='{{url('country_create')}}'">Создать</button>
 </body>
