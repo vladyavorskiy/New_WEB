@@ -34,6 +34,13 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
+
+//        if (!Auth::check()) {
+//            return redirect()->back()->withErrors([
+//                'error' => 'Для добавления события вам необходимо авторизоваться.',
+//            ]);
+//        }
+
         $validated=$request->validate([
             'country_id' => 'integer',
             'description' => 'required|unique:events|max:255',
@@ -41,7 +48,8 @@ class EventController extends Controller
         ]);
         $event=new Event($validated);
         $event->save();
-        return redirect('/event');
+        return redirect('/event')->withErrors([
+            'success' => 'Событие успешно создано']);
     }
 
     /**
@@ -74,19 +82,27 @@ class EventController extends Controller
             'date' => 'required|date'
         ]);
         $event = Event::all()->where('id',$id)->first();
-        $event->desciption = $validated['description'];
+        $event->description = $validated['description'];
         $event->date = $validated['date'];
         $event->country_id = $validated['country_id'];
         $event->save();
-        return redirect('/event');
+        return redirect('/event')->withInput()->withErrors([
+            'success' => 'Событие ' .$id .' успешно изменено']);
     }
 
     /**
      * Remove the specified resource from storage.
      */
+//    public function destroy(string $id)
+//    {
+//        Event::destroy($id);
+//        return redirect('/event');
+//    }
+
     public function destroy(string $id)
     {
         Event::destroy($id);
-        return redirect('/event');
+        return redirect('/event')->withErrors([
+            'success' => 'Событие ' .$id .' успешно удалено']);
     }
 }

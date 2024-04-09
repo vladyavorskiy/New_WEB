@@ -71,17 +71,21 @@ class LoginController extends Controller
         ]);
         if(Auth::attempt($credentials)){
             $request->session()->regenerate();
-
-            return redirect()->intended('login');
+            //return redirect()->intended('login');
+            return redirect()->intended('/country')->withErrors([
+                'success' => 'Вы успешно вошли в систему',
+            ]);
         }
         return back()->withErrors([
-            'erroe' => 'The provided credentials do not match our records.',
+            'error' => 'The provided credentials do not match our records.',
         ])->onlyInput('email','password');
     }
 
     public function login(Request $request)
     {
-        return view('login',['user'=>Auth::user()]);
+        return view('layout',['user'=>Auth::user()])->withErrors([
+            'error' => 'Вам необходимо авторизоваться',
+        ]);
     }
 
     public function logout(Request $request)
@@ -89,6 +93,13 @@ class LoginController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect('login');
+        //return redirect('login');
+        return redirect('/country')->withErrors([
+            'success' => 'Вы успешно вышли из системы',
+        ]);
     }
 }
+
+
+
+

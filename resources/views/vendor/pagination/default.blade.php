@@ -23,7 +23,7 @@
                 @if (is_array($element))
                     @foreach ($element as $page => $url)
                         @if ($page == $paginator->currentPage())
-                            <li class="active" aria-current="page"><span>{{ $page }}</span></li>
+                            <li class="active" aria-current="page"><a href="">{{ $page }}</a></li>
                         @else
                             <li><a href="{{ $url }}">{{ $page }}</a></li>
                         @endif
@@ -49,7 +49,13 @@
             <option value="2" @if($paginator->perPage() == 2) selected @endif >2</option>
             <option value="3" @if($paginator->perPage() == 3) selected @endif >3</option>
             <option value="4" @if($paginator->perPage() == 4) selected @endif >4</option>
+            <option value="5" @if($paginator->perPage() == 5) selected @endif >5</option>
         </select>
         <input type="submit" value="Изменить">
     </form>
 @endif
+
+
+
+
+

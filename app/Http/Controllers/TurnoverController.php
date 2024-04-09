@@ -15,7 +15,8 @@ class TurnoverController extends Controller
     public function index()
     {
         return view('turnovers',[
-            'turnovers' => Turnover::all()
+            //'turnovers' => Turnover::all()
+            'turnovers' => Turnover::with('country')->get()->all()
         ]);
     }
 
@@ -37,13 +38,14 @@ class TurnoverController extends Controller
         $validated=$request->validate([
             'country1_id' => 'integer',
             'country2_id' => 'integer',
-            'year' => 'required|integer',
+            'year' => 'required|integer|between:1800,2099',
             'export_from1_to2' => 'required|integer',
             'export_from2_to1' => 'required|integer'
         ]);
         $turnover=new Turnover($validated);
         $turnover->save();
-        return redirect('/turnover');
+        return redirect('/turnover')->withErrors([
+            'success' => 'Товарооборот успешно создан']);
     }
 
     /**
@@ -73,7 +75,7 @@ class TurnoverController extends Controller
         $validated=$request->validate([
             'country1_id' => 'integer',
             'country2_id' => 'integer',
-            'year' => 'required|integer',
+            'year' => 'required|integer|between:1800,2099',
             'export_from1_to2' => 'required|integer',
             'export_from2_to1' => 'required|integer'
         ]);
@@ -84,7 +86,8 @@ class TurnoverController extends Controller
         $turnover->export_from1_to2 = $validated['export_from1_to2'];
         $turnover->export_from2_to1 = $validated['export_from2_to1'];
         $turnover->save();
-        return redirect('/turnover');
+        return redirect('/turnover')->withInput()->withErrors([
+            'success' => 'Товарооборот ' .$id .' успешно изменен']);
     }
 
     /**
@@ -93,6 +96,8 @@ class TurnoverController extends Controller
     public function destroy(string $id)
     {
         Turnover::destroy($id);
-        return redirect('/turnover');
+        //return redirect('/turnover');
+        return redirect('/turnover')->withErrors([
+            'success' => 'Товарооборот ' .$id .' успешно удален']);
     }
 }

@@ -66,5 +66,8 @@ Route::get('/error',function (){
     return view('error', ['message' => session('message')]);
 });
 
+Route::get('/home', [CountryController::class, 'index']);
+
+
 //qwerty2024WEB
 //$2y$10$BbbYoCqozdNDurejmC0YtefsEa9PNYqonNG0YuVCBAsjvUsTT99YC

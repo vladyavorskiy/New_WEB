@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('economies', function (Blueprint $table) {
             $table->id();
             $table->foreignId('country_id')->constrained('countries');
-            $table->date('year');
+            $table->year('year');
             $table->integer('GDP');
             $table->integer('GDP_person');
             $table->timestamps();

@@ -37,13 +37,14 @@ class EconomyController extends Controller
     {
         $validated=$request->validate([
             'country_id' => 'integer',
-            'year' => 'required|date',
+            'year' => 'required|integer|between:1800,2099',
             'GDP' => 'required|integer',
             'GDP_person' => 'required|integer'
         ]);
         $economy=new Economy($validated);
         $economy->save();
-        return redirect('/economy');
+        return redirect('/economy')->withErrors([
+            'success' => 'Данные экономики успешно созданы']);
     }
 
     /**
@@ -72,7 +73,7 @@ class EconomyController extends Controller
     {
         $validated=$request->validate([
             'country_id' => 'integer',
-            'year' => 'required|date',
+            'year' => 'required|integer|between:1800,2099',
             'GDP' => 'required|integer',
             'GDP_person' => 'required|integer'
         ]);
@@ -82,7 +83,8 @@ class EconomyController extends Controller
         $economy->GDP = $validated['GDP'];
         $economy->GDP_person = $validated['GDP_person'];
         $economy->save();
-        return redirect('/economy');
+        return redirect('/economy')->withInput()->withErrors([
+            'success' => 'Данные экономики ' .$id .' успешно изменены']);
     }
 
     /**
@@ -91,6 +93,8 @@ class EconomyController extends Controller
     public function destroy(string $id)
     {
         Economy::destroy($id);
-        return redirect('/economy');
+        //return redirect('/economy');
+        return redirect('/economy')->withErrors([
+            'success' => 'Данные экономики ' .$id .' успешно удалены']);
     }
 }

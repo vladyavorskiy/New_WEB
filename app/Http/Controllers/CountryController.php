@@ -17,7 +17,7 @@ class CountryController extends Controller
         $perpage = $request->perpage ?? 2;
         return view('countries',[
             //'countries' => Country::all()
-            //'countries' => Country::paginate(2)
+            //'countries' => Country::paginate(5)
             'countries' => Country::paginate($perpage)->withQueryString()
         ]);
     }
@@ -45,7 +45,8 @@ class CountryController extends Controller
         ]);
         $country=new Country($validated);
         $country->save();
-        return redirect('/country');
+        return redirect('/country')->withErrors([
+            'success' => 'Страна ' .$country->name .' успешно создана']);
     }
 
     /**
@@ -86,7 +87,8 @@ class CountryController extends Controller
         $country->population = $validated['population'];
         $country->area = $validated['area'];
         $country->save();
-        return redirect('/country');
+        return redirect('/country')->withInput()->withErrors([
+            'success' => 'Страна ' .$id .' успешно изменена']);
     }
 
     /**
@@ -99,6 +101,12 @@ class CountryController extends Controller
                 'У вас нет разрешения на удаление страны номер ' . $id);
         }
         Country::destroy($id);
-        return redirect('/country');
+        //return redirect('/country');
+        return redirect('/country')->withErrors([
+            'success' => 'Страна ' .$id .' успешно удалена']);
     }
 }
+
+
+
+
