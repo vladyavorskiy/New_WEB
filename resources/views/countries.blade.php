@@ -45,31 +45,6 @@
 @extends('layout')
 @section('content')
     <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-        }
-
-        th, td {
-            padding: 10px;
-            border: 1px solid #ddd;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f2f2f2;
-            font-weight: bold;
-        }
-
-        tr:hover {
-            background-color: #f5f5f5;
-        }
-
-        .actions a {
-            margin-right: 5px;
-        }
-
         button {
             background: none;
             border: 0;

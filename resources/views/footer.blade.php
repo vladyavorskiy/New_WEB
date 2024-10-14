@@ -1,10 +1,5 @@
 <style>
-    body {
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
-        margin: 0;
-    }
+
     footer {
         background-color: #333;
         color: #fff;

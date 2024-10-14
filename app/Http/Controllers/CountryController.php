@@ -97,8 +97,8 @@ class CountryController extends Controller
     public function destroy(string $id)
     {
         if (! Gate::allows('destroy-country', Country::all()->where('id',$id)->first())){
-            return redirect('/error')->with('message',
-                'У вас нет разрешения на удаление страны номер ' . $id);
+            return redirect('/country')->withErrors(['success' =>
+                'У вас нет разрешения на удаление страны номер ' . $id]);
         }
         Country::destroy($id);
         //return redirect('/country');

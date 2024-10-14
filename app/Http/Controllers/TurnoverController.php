@@ -15,8 +15,7 @@ class TurnoverController extends Controller
     public function index()
     {
         return view('turnovers',[
-            //'turnovers' => Turnover::all()
-            'turnovers' => Turnover::with('country')->get()->all()
+            'turnovers' => Turnover::all()
         ]);
     }
 
