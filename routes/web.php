@@ -69,5 +69,10 @@ Route::get('/error',function (){
 Route::get('/home', [CountryController::class, 'index']);
 
 
+//vlad@email.ru
 //qwerty2024WEB
-//$2y$10$BbbYoCqozdNDurejmC0YtefsEa9PNYqonNG0YuVCBAsjvUsTT99YC
+//$2y$10$unC8E2nXrcV1gXxH0XJGSuj73dzWCitJnwFFQWIVNwJzGushcsDh2
+
+//dmitriy@gmail.com
+//password
+//$2y$10$N.sWnlFTGJyrJ/g94OEW5uUlsFXiH7a3pDNMbKfYj3EYE8M8XLJVm
