@@ -10,9 +10,15 @@ class TurnoverControllerApi extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return response(Turnover::all());
+        return response(Turnover::limit($request->perpage ?? 5)
+            ->offset(($request->perpage ?? 5) * ($request->page ?? 0))
+            ->get());
+    }
+
+    public function total(){
+        return response(Turnover::all()->count());
     }
 
     /**

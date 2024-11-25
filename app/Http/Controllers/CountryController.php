@@ -20,6 +20,8 @@ class CountryController extends Controller
             //'countries' => Country::paginate(5)
             'countries' => Country::paginate($perpage)->withQueryString()
         ]);
+
+
     }
 
     /**

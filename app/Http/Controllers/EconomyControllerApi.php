@@ -10,11 +10,16 @@ class EconomyControllerApi extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return response(Economy::all());
+        return response(Economy::limit($request->perpage ?? 5)
+            ->offset(($request->perpage ?? 5) * ($request->page ?? 0))
+            ->get());
     }
 
+    public function total(){
+        return response(Economy::all()->count());
+    }
     /**
      * Store a newly created resource in storage.
      */
