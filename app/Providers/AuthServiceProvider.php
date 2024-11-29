@@ -2,8 +2,11 @@
 
 namespace App\Providers;
 
-// use Illuminate\Support\Facades\Gate;
+use App\Models\Country;
+use App\Models\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -21,6 +24,15 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        $this->registerPolicies();
+        Paginator::defaultView('pagination::bootstrap-4');
+
+        Gate::define('destroy-country', function (User $user, Country $country){
+            return $user->is_admin==1 OR $country->population < 100000000;
+        });
+
+        Gate::define('create-country', function (User $user){
+            return $user->is_admin==1;
+        });
     }
 }

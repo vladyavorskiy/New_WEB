@@ -18,45 +18,61 @@ use App\Http\Controllers\AuthController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
 
 
-Route::get('/economy', [EconomyControllerApi::class, 'index']);
-Route::get('/economy/{id}', [EconomyControllerApi::class, 'show']);
-Route::get('/economy_total', [EconomyControllerApi::class, 'total']);
 
-Route::get('/country', [CountryControllerApi::class, 'index']);
-Route::get('/country/{id}', [CountryControllerApi::class, 'show']);
-Route::get('/country_total', [CountryControllerApi::class, 'total']);
-
-Route::get('/turnover', [TurnoverControllerApi::class, 'index']);
-Route::get('/turnover/{id}', [TurnoverControllerApi::class, 'show']);
-Route::get('/turnover_total', [TurnoverControllerApi::class, 'total']);
-
-Route::get('/event', [EventControllerApi::class, 'index']);
-Route::get('/event/{id}', [EventControllerApi::class, 'show']);
-Route::get('/event_total', [EventControllerApi::class, 'total']);
+//Route::get('/economy', [EconomyControllerApi::class, 'index']);
+//Route::get('/economy/{id}', [EconomyControllerApi::class, 'show']);
+//Route::get('/economy_total', [EconomyControllerApi::class, 'total']);
+//
+//Route::get('/country', [CountryControllerApi::class, 'index']);
+//Route::get('/country/{id}', [CountryControllerApi::class, 'show']);
+//Route::get('/country_total', [CountryControllerApi::class, 'total']);
+//
+//Route::get('/turnover', [TurnoverControllerApi::class, 'index']);
+//Route::get('/turnover/{id}', [TurnoverControllerApi::class, 'show']);
+//Route::get('/turnover_total', [TurnoverControllerApi::class, 'total']);
+//
+//Route::get('/event', [EventControllerApi::class, 'index']);
+//Route::get('/event/{id}', [EventControllerApi::class, 'show']);
+//Route::get('/event_total', [EventControllerApi::class, 'total']);
 
 
 Route::post('/login', [AuthController::class, 'login']);
 
+
 //Route::middleware('auth:sanctum')->get('/country', [CountryControllerApi::class, 'index']);
-
-Route::middleware('auth:sanctum')->get('/user', function (Request $request){
-    return $request->user();
-});
-
-Route::middleware('auth:sanctum')->get('/logout', [AuthController::class, 'logout']);
-
-//Route::group(['middleware' => ['auth:sanctum']], function (){
-//    Route::get('/country', [CountryControllerApi::class, 'index']);
-//    Route::get('/user', function (Request $request){
-//        return $request->user();
-//    });
-//    Route::get('/logout', [AuthController::class, 'logout']);
+//Route::middleware('auth:sanctum')->get('/user', function (Request $request){
+//    return $request->user();
 //});
+//Route::middleware('auth:sanctum')->get('/logout', [AuthController::class, 'logout']);
+
+
+Route::group(['middleware' => ['auth:sanctum']], function (){
+    Route::get('/user', function (Request $request){
+        return $request->user();
+    });
+    Route::get('/logout', [AuthController::class, 'logout']);
+
+    Route::get('/economy', [EconomyControllerApi::class, 'index']);
+    Route::get('/economy/{id}', [EconomyControllerApi::class, 'show']);
+    Route::get('/economy_total', [EconomyControllerApi::class, 'total']);
+
+    Route::get('/country', [CountryControllerApi::class, 'index']);
+    Route::get('/country/{id}', [CountryControllerApi::class, 'show']);
+    Route::get('/country_total', [CountryControllerApi::class, 'total']);
+
+    Route::get('/turnover', [TurnoverControllerApi::class, 'index']);
+    Route::get('/turnover/{id}', [TurnoverControllerApi::class, 'show']);
+    Route::get('/turnover_total', [TurnoverControllerApi::class, 'total']);
+
+    Route::get('/event', [EventControllerApi::class, 'index']);
+    Route::get('/event/{id}', [EventControllerApi::class, 'show']);
+    Route::get('/event_total', [EventControllerApi::class, 'total']);
+
+    Route::post('/country', [CountryControllerApi::class, 'store']);
+    Route::get('/country_delete/{id}', [CountryControllerApi::class, 'destroy']);
+});
 
 
 //3|FTBND2NNJpQ4iVtTPPNx0cC2Dnm7vbRhZdeh05qxdf411f1d
