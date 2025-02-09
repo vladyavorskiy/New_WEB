@@ -47,6 +47,7 @@ Route::post('/login', [AuthController::class, 'login']);
 //});
 //Route::middleware('auth:sanctum')->get('/logout', [AuthController::class, 'logout']);
 
+Route::get('/country', [CountryControllerApi::class, 'index']);
 
 Route::group(['middleware' => ['auth:sanctum']], function (){
     Route::get('/user', function (Request $request){
@@ -58,7 +59,6 @@ Route::group(['middleware' => ['auth:sanctum']], function (){
     Route::get('/economy/{id}', [EconomyControllerApi::class, 'show']);
     Route::get('/economy_total', [EconomyControllerApi::class, 'total']);
 
-    Route::get('/country', [CountryControllerApi::class, 'index']);
     Route::get('/country/{id}', [CountryControllerApi::class, 'show']);
     Route::get('/country_total', [CountryControllerApi::class, 'total']);
 

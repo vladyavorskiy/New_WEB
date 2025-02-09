@@ -116,8 +116,8 @@ class CountryControllerApi extends Controller
 
         try {
             if ($country->picture_url) {
-                $filePath = ltrim(parse_url($country->picture_url, PHP_URL_PATH), '/');
-                Storage::disk('s3')->delete('27518_Flag_of_Belarus.svg.png');
+                $filePath = ltrim(parse_url($country->picture_url, PHP_URL_PATH), '');
+                Storage::disk('s3')->delete($filePath);
             }
             $country->delete();
             return response()->json([
